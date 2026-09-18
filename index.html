@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دليل السفر الذكي - اكتشف الوطن العربي</title>
     
-    <!-- Google Fonts: Cairo -->
+    <!-- Google Fonts: Cairo & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,6 +22,7 @@
                 extend: {
                     fontFamily: {
                         cairo: ['Cairo', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
                     },
                     colors: {
                         brand: {
@@ -47,29 +48,15 @@
         body {
             font-family: 'Cairo', sans-serif;
             background-color: #f8fafc;
-            top: 0 !important; /* لمنع جوجل من تحريك الصفحة للأسفل */
         }
         
+        [dir="ltr"] body {
+            font-family: 'Inter', sans-serif;
+        }
+
         .dark body {
             background-color: #0f172a;
             color: #f8fafc;
-        }
-
-        /* إخفاء شريط Google Translate العلوي المزعج */
-        .goog-te-banner-frame.skiptranslate {
-            display: none !important;
-        }
-        body {
-            top: 0px !important;
-        }
-        .goog-te-gadget-icon {
-            display: none !important;
-        }
-        .goog-te-gadget-simple {
-            background-color: transparent !important;
-            border: none !important;
-            padding: 0 !important;
-            font-size: 14px !important;
         }
 
         /* Glassmorphism Styles */
@@ -135,9 +122,6 @@
 </head>
 <body class="text-slate-800 dark:text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white transition-colors duration-300">
 
-    <!-- عنصر غير مرئي لتشغيل ترجمة جوجل برمجياً -->
-    <div id="google_translate_element" class="hidden"></div>
-
     <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
@@ -148,48 +132,41 @@
                         <i class="fa-solid font-bold fa-compass text-2xl"></i>
                     </div>
                     <div>
-                        <span class="text-xl font-black bg-gradient-to-r from-brand-700 via-brand-600 to-amber-600 dark:from-brand-500 dark:to-amber-400 bg-clip-text text-transparent">رحلتي العربية</span>
-                        <span class="block text-xs text-slate-500 dark:text-slate-400 font-semibold">دليل السفر الذكي AI</span>
+                        <span data-i18n="title" class="text-xl font-black bg-gradient-to-r from-brand-700 via-brand-600 to-amber-600 dark:from-brand-500 dark:to-amber-400 bg-clip-text text-transparent">رحلتي العربية</span>
+                        <span data-i18n="subtitle" class="block text-xs text-slate-500 dark:text-slate-400 font-semibold">دليل السفر الذكي AI</span>
                     </div>
                 </div>
 
                 <!-- Desktop Navigation Menu -->
                 <nav class="hidden md:flex items-center gap-8">
                     <button onclick="navigateTo('home')" id="nav-home" class="nav-link text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-500 py-2 transition-colors font-medium active">
-                        <i class="fa-solid fa-house ml-1 text-sm"></i> الرئيسية
+                        <i class="fa-solid fa-house mx-1 text-sm"></i> <span data-i18n="nav_home">الرئيسية</span>
                     </button>
                     <button onclick="navigateTo('destinations')" id="nav-destinations" class="nav-link text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-500 py-2 transition-colors font-medium">
-                        <i class="fa-solid fa-map-location-dot ml-1 text-sm"></i> الوجهات السياحية
+                        <i class="fa-solid fa-map-location-dot mx-1 text-sm"></i> <span data-i18n="nav_destinations">الوجهات السياحية</span>
                     </button>
                     <button onclick="navigateTo('ai-assistant')" id="nav-ai-assistant" class="nav-link text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-500 py-2 transition-colors font-medium relative">
-                        <span class="absolute -top-1 -left-2 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-pulse">ذكاء AI</span>
-                        <i class="fa-solid fa-robot ml-1 text-sm"></i> المساعد الذكي
+                        <span data-i18n="badge_ai" class="absolute -top-1 -left-2 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-pulse">ذكاء AI</span>
+                        <i class="fa-solid fa-robot mx-1 text-sm"></i> <span data-i18n="nav_assistant">المساعد الذكي</span>
                     </button>
                     <button onclick="navigateTo('itinerary')" id="nav-itinerary" class="nav-link text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-500 py-2 transition-colors font-medium">
-                        <i class="fa-solid fa-route ml-1 text-sm"></i> مساراتي (<span id="saved-count">0</span>)
+                        <i class="fa-solid fa-route mx-1 text-sm"></i> <span data-i18n="nav_itinerary">مساراتي</span> (<span id="saved-count">0</span>)
                     </button>
                 </nav>
 
                 <!-- Header Actions -->
                 <div class="flex items-center gap-3">
                     
-                    <!-- Language Selector Dropdown -->
-                    <div class="relative inline-block text-right">
-                        <div class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold border border-slate-200 dark:border-slate-700">
-                            <i class="fa-solid fa-globe text-brand-600 text-sm"></i>
-                            <select id="language-select" onchange="changeLanguage(this.value)" class="bg-transparent outline-none cursor-pointer">
-                                <option value="ar" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">العربية 🇦🇪</option>
-                                <option value="en" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">English 🇬🇧</option>
-                                <option value="fr" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Français 🇫🇷</option>
-                                <option value="de" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Deutsch 🇩🇪</option>
-                                <option value="es" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Español 🇪🇸</option>
-                                <option value="it" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Italiano 🇮🇹</option>
-                                <option value="pt" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Português 🇵🇹</option>
-                                <option value="ru" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Русский 🇷🇺</option>
-                                <option value="nl" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Nederlands 🇳🇱</option>
-                                <option value="pl" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Polski 🇵🇱</option>
-                            </select>
-                        </div>
+                    <!-- Language Switcher -->
+                    <div class="relative">
+                        <select id="language-select" onchange="changeLanguage(this.value)" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold py-2 px-3 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer">
+                            <option value="ar">العربية (Arabic)</option>
+                            <option value="en">English</option>
+                            <option value="fr">Français (French)</option>
+                            <option value="es">Español (Spanish)</option>
+                            <option value="de">Deutsch (German)</option>
+                            <option value="it">Italiano (Italian)</option>
+                        </select>
                     </div>
 
                     <!-- Dark Mode Toggle -->
@@ -201,7 +178,7 @@
                     <!-- CTA Button -->
                     <button onclick="navigateTo('ai-assistant')" class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold px-5 py-2.5 rounded-xl shadow-md shadow-brand-600/20 hover:shadow-lg transition-all transform hover:-translate-y-0.5">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
-                        <span>خطط رحلتك</span>
+                        <span data-i18n="plan_trip">خطط رحلتك</span>
                     </button>
 
                     <!-- Mobile Menu Button -->
@@ -215,17 +192,17 @@
         <!-- Mobile Drawer Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3">
             <button onclick="navigateTo('home'); toggleMobileMenu();" class="w-full text-right py-2.5 px-4 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-medium flex items-center gap-3">
-                <i class="fa-solid fa-house text-brand-600"></i> الرئيسية
+                <i class="fa-solid fa-house text-brand-600"></i> <span data-i18n="nav_home">الرئيسية</span>
             </button>
             <button onclick="navigateTo('destinations'); toggleMobileMenu();" class="w-full text-right py-2.5 px-4 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-medium flex items-center gap-3">
-                <i class="fa-solid fa-map-location-dot text-brand-600"></i> الوجهات السياحية
+                <i class="fa-solid fa-map-location-dot text-brand-600"></i> <span data-i18n="nav_destinations">الوجهات السياحية</span>
             </button>
             <button onclick="navigateTo('ai-assistant'); toggleMobileMenu();" class="w-full text-right py-2.5 px-4 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-medium flex items-center justify-between">
-                <span class="flex items-center gap-3"><i class="fa-solid fa-robot text-amber-500"></i> المساعد الذكي AI</span>
-                <span class="bg-amber-500/10 text-amber-600 text-xs px-2 py-0.5 rounded-full font-bold">جديد</span>
+                <span class="flex items-center gap-3"><i class="fa-solid fa-robot text-amber-500"></i> <span data-i18n="nav_assistant">المساعد الذكي</span></span>
+                <span data-i18n="badge_new" class="bg-amber-500/10 text-amber-600 text-xs px-2 py-0.5 rounded-full font-bold">جديد</span>
             </button>
             <button onclick="navigateTo('itinerary'); toggleMobileMenu();" class="w-full text-right py-2.5 px-4 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-medium flex items-center gap-3">
-                <i class="fa-solid fa-route text-brand-600"></i> مساراتي المحفوظة
+                <i class="fa-solid fa-route text-brand-600"></i> <span data-i18n="nav_itinerary">مساراتي المحفوظة</span>
             </button>
         </div>
     </header>
@@ -246,14 +223,14 @@
                 <div class="relative z-10 max-w-3xl mx-auto space-y-6">
                     <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-brand-300 border border-white/20 text-sm font-semibold">
                         <i class="fa-solid fa-sparkles text-amber-400"></i>
-                        <span>الجيل الجديد من تخطيط السفر بالذكاء الاصطناعي</span>
+                        <span data-i18n="hero_badge">الجيل الجديد من تخطيط السفر بالذكاء الاصطناعي</span>
                     </div>
 
-                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight">
-                        استكشف سحر <span class="bg-gradient-to-r from-amber-400 via-amber-300 to-brand-300 bg-clip-text text-transparent">الوطن العربي</span> بلمسة ذكية
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight" data-i18n="hero_title">
+                        استكشف سحر الوطن العربي بلمسة ذكية
                     </h1>
 
-                    <p class="text-slate-200 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                    <p class="text-slate-200 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed" data-i18n="hero_desc">
                         من معالم العلا والتاريخ في القاهرة، إلى شواطئ البحر الأحمر وجبال البتراء. دع الذكاء الاصطناعي يرتب لك رحلة أحلامك بدقة وبحسب ميزانيتك.
                     </p>
 
@@ -262,9 +239,9 @@
                         <div class="glass-card p-2 rounded-2xl md:rounded-full shadow-2xl flex flex-col md:flex-row items-center gap-2 border border-white/30 text-slate-800 dark:text-slate-100">
                             <div class="flex items-center w-full px-4 py-2 gap-3">
                                 <i class="fa-solid fa-magnifying-glass text-brand-600 text-lg"></i>
-                                <input id="hero-search-input" type="text" placeholder="إلى أين تريد الذهاب؟ (مثلاً: البتراء، دبي، العلا...)" class="w-full bg-transparent border-none outline-none text-sm md:text-base placeholder-slate-400">
+                                <input id="hero-search-input" type="text" data-i18n-placeholder="search_placeholder" placeholder="إلى أين تريد الذهاب؟ (مثلاً: البتراء، دبي، العلا...)" class="w-full bg-transparent border-none outline-none text-sm md:text-base placeholder-slate-400">
                             </div>
-                            <button onclick="handleHeroSearch()" class="w-full md:w-auto bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-700 hover:to-amber-600 text-white font-bold px-8 py-3.5 rounded-xl md:rounded-full whitespace-nowrap shadow-md transition-all">
+                            <button onclick="handleHeroSearch()" class="w-full md:w-auto bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-700 hover:to-amber-600 text-white font-bold px-8 py-3.5 rounded-xl md:rounded-full whitespace-nowrap shadow-md transition-all" data-i18n="search_btn">
                                 ابحث الآن
                             </button>
                         </div>
@@ -272,7 +249,7 @@
 
                     <!-- Quick Tags -->
                     <div class="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-300 pt-2">
-                        <span>الأكثر بحثاً:</span>
+                        <span data-i18n="popular_searches">الأكثر بحثاً:</span>
                         <button onclick="quickSearch('البتراء')" class="bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full border border-white/10 transition">البتراء</button>
                         <button onclick="quickSearch('العلا')" class="bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full border border-white/10 transition">العلا</button>
                         <button onclick="quickSearch('دبي')" class="bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full border border-white/10 transition">دبي</button>
@@ -287,9 +264,9 @@
                     <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-robot"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">مساعد سفر ذكي AI</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                        تحدث مع مساعدنا الذكي المدعوم بـ Gemini للحصول على توصيات مخصصة، إجابات للأسئلة الثقافية، وخطط سفر دقيقة.
+                    <h3 class="text-xl font-bold mb-2" data-i18n="feat_1_title">مساعد سفر ذكي AI</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed" data-i18n="feat_1_desc">
+                        تحدث مع مساعدنا الذكي للحصول على توصيات مخصصة، إجابات للأسئلة الثقافية، وخطط سفر دقيقة.
                     </p>
                 </div>
 
@@ -297,9 +274,9 @@
                     <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-calendar-check"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">جدول يومي مخصص</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                        حدد عدد أيام رحلتك والميزانية والاهتمامات وسيقوم النظام بإنشاء برنامج سياحي مقسم يوماً بيوم وموقعاً بموقع.
+                    <h3 class="text-xl font-bold mb-2" data-i18n="feat_2_title">جدول يومي مخصص</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed" data-i18n="feat_2_desc">
+                        حدد عدد أيام رحلتك والميزانية والاهتمامات وسيقوم النظام بإنشاء برنامج سياحي مقسم يوماً بيوم.
                     </p>
                 </div>
 
@@ -307,9 +284,9 @@
                     <div class="w-14 h-14 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-heart"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">حفظ وتصدير المفضلة</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                        احفظ وجهاتك المفضلة ومسارات سفرك للرجوع إليها في أي وقت دون الحاجة للتسجيل أو تعقيدات.
+                    <h3 class="text-xl font-bold mb-2" data-i18n="feat_3_title">حفظ وتصدير المفضلة</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed" data-i18n="feat_3_desc">
+                        احفظ وجهاتك المفضلة ومسارات سفرك للرجوع إليها في أي وقت دون الحاجة للتسجيل.
                     </p>
                 </div>
             </div>
@@ -318,12 +295,13 @@
             <div class="space-y-8">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
                     <div>
-                        <span class="text-brand-600 font-bold text-sm tracking-wider uppercase">وجهات مختارة</span>
-                        <h2 class="text-3xl font-black">أشهر الوجهات العربية الساحرة</h2>
+                        <span class="text-brand-600 font-bold text-sm tracking-wider uppercase" data-i18n="featured_tag">وجهات مختارة</span>
+                        <h2 class="text-3xl font-black" data-i18n="featured_title">أشهر الوجهات العربية الساحرة</h2>
                     </div>
                     <button onclick="navigateTo('destinations')" class="inline-flex items-center gap-2 text-brand-600 dark:text-brand-400 font-bold hover:gap-3 transition-all">
-                        <span>عرض جميع الوجهات</span>
-                        <i class="fa-solid fa-arrow-left"></i>
+                        <span data-i18n="view_all">عرض جميع الوجهات</span>
+                        <i class="fa-solid fa-arrow-left rtl:inline-block ltr:hidden"></i>
+                        <i class="fa-solid fa-arrow-right ltr:inline-block rtl:hidden"></i>
                     </button>
                 </div>
 
@@ -333,43 +311,30 @@
                 </div>
             </div>
 
-            <!-- AI Banner Prompt -->
-            <div class="glass-card rounded-3xl p-8 md:p-12 border border-brand-500/20 bg-gradient-to-r from-brand-900/10 via-amber-500/10 to-transparent flex flex-col md:flex-row items-center justify-between gap-8">
-                <div class="space-y-4 max-w-xl">
-                    <span class="bg-amber-500/20 text-amber-700 dark:text-amber-400 text-xs font-bold px-3 py-1 rounded-full">استشارة سفر فورية</span>
-                    <h3 class="text-2xl md:text-3xl font-black">هل تحتار أي دولة عربية تناسب عطلتك القادمة؟</h3>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-sm">
-                        أخبر المساعد الذكي بنوع رحلتك (عائلية، مغامرة، ميزانية اقتصادية، شهر عسل) وسيعطيك اقتراحات مخصصة في ثوانٍ.
-                    </p>
-                </div>
-                <button onclick="navigateTo('ai-assistant')" class="w-full md:w-auto whitespace-nowrap bg-gradient-to-r from-amber-500 to-brand-600 hover:from-amber-600 hover:to-brand-700 text-white font-bold px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 text-center">
-                    تحدث مع المساعد الآن <i class="fa-solid fa-arrow-left mr-2"></i>
-                </button>
-            </div>
         </section>
 
         <!-- PAGE 2: DESTINATIONS CATALOG -->
         <section id="page-destinations" class="page-view page-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
             <div class="text-center max-w-3xl mx-auto space-y-4">
-                <h1 class="text-3xl md:text-5xl font-black">استكشف الوجهات العربية</h1>
-                <p class="text-slate-600 dark:text-slate-400">تصفح أفضل المدن والمعالم السياحية في العالم العربي حسب الاهتمام أو الدولة</p>
+                <h1 class="text-3xl md:text-5xl font-black" data-i18n="explore_title">استكشف الوجهات العربية</h1>
+                <p class="text-slate-600 dark:text-slate-400" data-i18n="explore_desc">تصفح أفضل المدن والمعالم السياحية في العالم العربي حسب الاهتمام أو الدولة</p>
             </div>
 
             <!-- Filter Controls -->
             <div class="glass-card p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
                 <!-- Categories -->
                 <div class="flex flex-wrap gap-2 w-full md:w-auto" id="category-filters">
-                    <button onclick="filterDestinations('all')" class="cat-btn bg-brand-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition">الكل</button>
-                    <button onclick="filterDestinations(' historical')" class="cat-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition">تاريخية وتراثية</button>
-                    <button onclick="filterDestinations('beach')" class="cat-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition">شواطئ واستجمام</button>
-                    <button onclick="filterDestinations('adventure')" class="cat-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition">مغامرة وطبيعة</button>
-                    <button onclick="filterDestinations('modern')" class="cat-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition">عصرية وترفيه</button>
+                    <button onclick="filterDestinations('all')" class="cat-btn bg-brand-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition" data-i18n="cat_all">الكل</button>
+                    <button onclick="filterDestinations('historical')" class="cat-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition" data-i18n="cat_historical">تاريخية وتراثية</button>
+                    <button onclick="filterDestinations('beach')" class="cat-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition" data-i18n="cat_beach">شواطئ واستجمام</button>
+                    <button onclick="filterDestinations('adventure')" class="cat-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition" data-i18n="cat_adventure">مغامرة وطبيعة</button>
+                    <button onclick="filterDestinations('modern')" class="cat-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition" data-i18n="cat_modern">عصرية وترفيه</button>
                 </div>
 
                 <!-- Search Input inside Filter -->
                 <div class="relative w-full md:w-72">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-slate-400"></i>
-                    <input type="text" id="destination-search-input" onkeyup="searchDestinations()" placeholder="بحث باسم المدينة أو الدولة..." class="w-full pl-4 pr-10 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <i class="fa-solid fa-magnifying-glass absolute rtl:right-3 ltr:left-3 top-3 text-slate-400"></i>
+                    <input type="text" id="destination-search-input" onkeyup="searchDestinations()" data-i18n-placeholder="filter_placeholder" placeholder="بحث باسم المدينة أو الدولة..." class="w-full rtl:pl-4 rtl:pr-10 ltr:pr-4 ltr:pl-10 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
                 </div>
             </div>
 
@@ -382,9 +347,9 @@
         <!-- PAGE 3: AI TRAVEL ASSISTANT -->
         <section id="page-ai-assistant" class="page-view page-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div class="text-center max-w-2xl mx-auto space-y-3">
-                <span class="inline-block bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-bold px-3 py-1 rounded-full">مدعوم بنموذج Gemini AI</span>
-                <h1 class="text-3xl md:text-4xl font-black">مساعد السفر الذكي ومخطط الرحلات</h1>
-                <p class="text-slate-600 dark:text-slate-400 text-sm">اسأل عن التأشيرات، الأجواء، الميزانيات، أو اطلب برنامجاً سياحياً كاملاً ليوميات سفرك</p>
+                <span class="inline-block bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-bold px-3 py-1 rounded-full" data-i18n="ai_badge">مدعوم بنموذج Gemini AI</span>
+                <h1 class="text-3xl md:text-4xl font-black" data-i18n="ai_title">مساعد السفر الذكي ومخطط الرحلات</h1>
+                <p class="text-slate-600 dark:text-slate-400 text-sm" data-i18n="ai_desc">اسأل عن التأشيرات، الأجواء، الميزانيات، أو اطلب برنامجاً سياحياً كاملاً ليوميات سفرك</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -393,74 +358,40 @@
                 <div class="glass-card p-6 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-5">
                     <h2 class="text-xl font-bold flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                         <i class="fa-solid fa-sliders text-brand-600"></i>
-                        <span>تخطيط سريع لرحلتك</span>
+                        <span data-i18n="quick_plan">تخطيط سريع لرحلتك</span>
                     </h2>
 
                     <!-- Form Inputs -->
                     <div class="space-y-4 text-sm">
                         <div>
-                            <label class="block font-bold mb-1">الوجهة المقترحة:</label>
-                            <input type="text" id="ai-destination" placeholder="مثال: دبي، الشارقة، وادي رم، أسوان..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none">
+                            <label class="block font-bold mb-1" data-i18n="dest_label">الوجهة المقترحة:</label>
+                            <input type="text" id="ai-destination" data-i18n-placeholder="dest_placeholder" placeholder="مثال: دبي، الشارقة، وادي رم..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none">
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block font-bold mb-1">عدد الأيام:</label>
+                                <label class="block font-bold mb-1" data-i18n="days_label">عدد الأيام:</label>
                                 <select id="ai-days" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none">
-                                    <option value="3">3 أيام</option>
-                                    <option value="5" selected>5 أيام</option>
-                                    <option value="7">أسبوع (7 أيام)</option>
-                                    <option value="10">10 أيام</option>
+                                    <option value="3">3</option>
+                                    <option value="5" selected>5</option>
+                                    <option value="7">7</option>
+                                    <option value="10">10</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block font-bold mb-1">الميزانية:</label>
+                                <label class="block font-bold mb-1" data-i18n="budget_label">الميزانية:</label>
                                 <select id="ai-budget" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none">
-                                    <option value="اقتصادية">اقتصادية 💰</option>
-                                    <option value="متوسطة" selected>متوسطة 💵</option>
-                                    <option value="فاخرة">فاخرة 💎</option>
+                                    <option value="اقتصادية">💰 Economy</option>
+                                    <option value="متوسطة" selected>💵 Medium</option>
+                                    <option value="فاخرة">💎 Luxury</option>
                                 </select>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block font-bold mb-1">نوع الرحلة / الاهتمامات:</label>
-                            <div class="grid grid-cols-2 gap-2 text-xs">
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-100 dark:bg-slate-800 cursor-pointer">
-                                    <input type="checkbox" value="عائلية" class="ai-interest rounded text-brand-600 focus:ring-brand-500"> عائلية
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-100 dark:bg-slate-800 cursor-pointer">
-                                    <input type="checkbox" value="تاريخ وثقافة" class="ai-interest rounded text-brand-600 focus:ring-brand-500" checked> تاريخ وثقافة
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-100 dark:bg-slate-800 cursor-pointer">
-                                    <input type="checkbox" value="مغامرة وطبيعة" class="ai-interest rounded text-brand-600 focus:ring-brand-500"> مغامرة وطبيعة
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-100 dark:bg-slate-800 cursor-pointer">
-                                    <input type="checkbox" value="استجمام وشواطئ" class="ai-interest rounded text-brand-600 focus:ring-brand-500"> استجمام
-                                </label>
                             </div>
                         </div>
 
                         <button onclick="generateAITripPlan()" class="w-full bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-700 hover:to-amber-600 text-white font-bold py-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
                             <i class="fa-solid fa-wand-magic-sparkles"></i>
-                            <span>توليد برنامج الرحلة الذكي</span>
+                            <span data-i18n="generate_btn">توليد برنامج الرحلة الذكي</span>
                         </button>
-                    </div>
-
-                    <!-- Quick Prompts -->
-                    <div class="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-2">
-                        <span class="text-xs text-slate-500 font-semibold">أسئلة شائعة يمكنك النقر عليها:</span>
-                        <div class="space-y-1.5 text-xs">
-                            <button onclick="sendQuickPrompt('ما هي أفضل الأوقات لزيارة العلا في السعودية وكيف أستعد لها؟')" class="w-full text-right p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 dark:hover:bg-brand-900/30 text-slate-700 dark:text-slate-300 transition line-clamp-1">
-                                💡 أفضل أوقات زيارة العلا وكيفية الاستعداد؟
-                            </button>
-                            <button onclick="sendQuickPrompt('أعطني نصائح ثقافية وإتيكيت مهم للقيام به عند زيارة سلطنة عمان.')" class="w-full text-right p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 dark:hover:bg-brand-900/30 text-slate-700 dark:text-slate-300 transition line-clamp-1">
-                                🇴🇲 نصائح ثقافية مهمة عند زيارة سلطنة عمان
-                            </button>
-                            <button onclick="sendQuickPrompt('قائمة بأشهر الأطباق الشعبية التي يجب تجربتها في المغرب العربي')" class="w-full text-right p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 dark:hover:bg-brand-900/30 text-slate-700 dark:text-slate-300 transition line-clamp-1">
-                                🍲 أطباق شعبية لا تفوّت في المغرب العربي
-                            </button>
-                        </div>
                     </div>
                 </div>
 
@@ -477,12 +408,12 @@
                                 <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full"></span>
                             </div>
                             <div>
-                                <h3 class="font-bold text-sm">المساعد السياحي الذكي</h3>
-                                <span class="text-xs text-slate-500">متصل الآن - جاهز للإجابة والتخطيط</span>
+                                <h3 class="font-bold text-sm" data-i18n="chat_agent_title">المساعد السياحي الذكي</h3>
+                                <span class="text-xs text-slate-500" data-i18n="chat_agent_status">متصل الآن - جاهز للإجابة والتخطيط</span>
                             </div>
                         </div>
-                        <button onclick="clearChat()" class="text-xs text-slate-500 hover:text-rose-500 p-2 rounded-lg transition" title="مسح المحادثة">
-                            <i class="fa-solid fa-trash-can"></i> مسح
+                        <button onclick="clearChat()" class="text-xs text-slate-500 hover:text-rose-500 p-2 rounded-lg transition" title="مسح">
+                            <i class="fa-solid fa-trash-can"></i> <span data-i18n="clear_chat">مسح</span>
                         </button>
                     </div>
 
@@ -493,25 +424,24 @@
                             <div class="w-8 h-8 rounded-lg bg-brand-600 text-white flex-shrink-0 flex items-center justify-center text-xs">
                                 <i class="fa-solid fa-robot"></i>
                             </div>
-                            <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-4 rounded-2xl rounded-tr-none max-w-[85%] leading-relaxed">
-                                مرحباً بك! أنا مساعدك الذكي لاستكشاف السياحة في كافة الدول العربية. 🌴<br>
-                                يمكنك أن تسألني عن أفضل الوجهات، النصائح المالية، الأنشطة الموصى بها، أو اختر من النموذج جانباً لإنشاء خطة سفر كاملة.
+                            <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-4 rounded-2xl rtl:rounded-tr-none ltr:rounded-tl-none max-w-[85%] leading-relaxed" data-i18n="chat_welcome">
+                                مرحباً بك! أنا مساعدك الذكي لاستكشاف السياحة في كافة الدول العربية. 🌴
                             </div>
                         </div>
                     </div>
 
-                    <!-- Chat Typing Indicator (hidden by default) -->
+                    <!-- Chat Typing Indicator -->
                     <div id="chat-loading" class="hidden px-6 py-2 text-xs text-slate-500 items-center gap-2">
                         <i class="fa-solid fa-spinner animate-spin text-brand-600"></i>
-                        <span>جاري التفكير وصياغة أفضل التوصيات...</span>
+                        <span data-i18n="ai_thinking">جاري التفكير وصياغة أفضل التوصيات...</span>
                     </div>
 
                     <!-- Chat Input Bar -->
                     <div class="p-3 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                         <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex items-center gap-2">
-                            <input type="text" id="chat-input" placeholder="اكتب سؤالك هنا (مثال: جدول 4 أيام في صلالة)..." class="flex-grow px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 border-none outline-none text-sm focus:ring-2 focus:ring-brand-500">
+                            <input type="text" id="chat-input" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك هنا..." class="flex-grow px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 border-none outline-none text-sm focus:ring-2 focus:ring-brand-500">
                             <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white p-3 rounded-xl shadow-md transition-colors flex-shrink-0">
-                                <i class="fa-solid fa-paper-plane"></i>
+                                <i class="fa-solid fa-paper-plane rtl:rotate-180"></i>
                             </button>
                         </form>
                     </div>
@@ -525,11 +455,11 @@
         <section id="page-itinerary" class="page-view page-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 class="text-3xl font-black">مساراتي وخطط السفر المحفوظة</h1>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm">نظّم الأماكن التي ترغب بزيارتها وأضف ملاحظاتك الشخصية</p>
+                    <h1 class="text-3xl font-black" data-i18n="itinerary_title">مساراتي وخطط السفر المحفوظة</h1>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm" data-i18n="itinerary_desc">نظّم الأماكن التي ترغب بزيارتها وأضف ملاحظاتك الشخصية</p>
                 </div>
                 <button onclick="openCustomActivityModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm flex items-center gap-2 shadow-md">
-                    <i class="fa-solid fa-plus"></i> إضافة نشاط خاص
+                    <i class="fa-solid fa-plus"></i> <span data-i18n="add_activity_btn">إضافة نشاط خاص</span>
                 </button>
             </div>
 
@@ -538,7 +468,7 @@
                 <div class="space-y-4">
                     <h2 class="text-xl font-bold flex items-center gap-2">
                         <i class="fa-solid fa-bookmark text-amber-500"></i>
-                        <span>الوجهات المفضلة (<span id="saved-dest-count">0</span>)</span>
+                        <span><span data-i18n="saved_dests_label">الوجهات المفضلة</span> (<span id="saved-dest-count">0</span>)</span>
                     </h2>
                     
                     <div id="saved-destinations-list" class="space-y-3">
@@ -551,9 +481,9 @@
                     <div class="flex items-center justify-between">
                         <h2 class="text-xl font-bold flex items-center gap-2">
                             <i class="fa-solid fa-list-check text-brand-600"></i>
-                            <span>جدول الأنشطة اليومي</span>
+                            <span data-i18n="daily_schedule">جدول الأنشطة اليومي</span>
                         </h2>
-                        <button onclick="clearAllActivities()" class="text-xs text-rose-500 hover:underline">مسح الكل</button>
+                        <button onclick="clearAllActivities()" class="text-xs text-rose-500 hover:underline" data-i18n="clear_all">مسح الكل</button>
                     </div>
 
                     <!-- Days Container -->
@@ -568,13 +498,10 @@
 
     <!-- DESTINATION DETAIL MODAL -->
     <div id="destination-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="glass-card bg-white dark:bg-slate-900 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl relative animate-fade-in">
-            <!-- Close Button -->
-            <button onclick="closeModal()" class="absolute top-4 left-4 z-10 w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center hover:bg-slate-900 transition">
+        <div class="glass-card bg-white dark:bg-slate-900 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-4 rtl:left-4 ltr:right-4 z-10 w-10 h-10 rounded-full bg-slate-900/60 text-white flex items-center justify-center hover:bg-slate-900 transition">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-
-            <!-- Modal Content (Dynamic) -->
             <div id="modal-content"></div>
         </div>
     </div>
@@ -582,31 +509,30 @@
     <!-- ADD CUSTOM ACTIVITY MODAL -->
     <div id="activity-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="glass-card bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 shadow-2xl space-y-4">
-            <h3 class="text-xl font-bold">إضافة نشاط للمسار</h3>
+            <h3 class="text-xl font-bold" data-i18n="modal_add_title">إضافة نشاط للمسار</h3>
             
             <div class="space-y-3 text-sm">
                 <div>
-                    <label class="block font-semibold mb-1">اسم النشاط / المكان:</label>
-                    <input type="text" id="modal-act-title" placeholder="مثال: جولة بحرية في اليخت..." class="w-full px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none">
+                    <label class="block font-semibold mb-1" data-i18n="act_name">اسم النشاط / المكان:</label>
+                    <input type="text" id="modal-act-title" class="w-full px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none">
                 </div>
                 <div>
-                    <label class="block font-semibold mb-1">اليوم:</label>
+                    <label class="block font-semibold mb-1" data-i18n="act_day">اليوم:</label>
                     <select id="modal-act-day" class="w-full px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none">
-                        <option value="اليوم الأول">اليوم الأول</option>
-                        <option value="اليوم الثاني">اليوم الثاني</option>
-                        <option value="اليوم الثالث">اليوم الثالث</option>
-                        <option value="اليوم الرابع">اليوم الرابع</option>
+                        <option value="اليوم الأول">Day 1 / اليوم الأول</option>
+                        <option value="اليوم الثاني">Day 2 / اليوم الثاني</option>
+                        <option value="اليوم الثالث">Day 3 / اليوم الثالث</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block font-semibold mb-1">ملاحظات إضافية:</label>
-                    <textarea id="modal-act-notes" rows="2" placeholder="أيقونة، ميزانية، أو تذكير..." class="w-full px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none"></textarea>
+                    <label class="block font-semibold mb-1" data-i18n="act_notes">ملاحظات إضافية:</label>
+                    <textarea id="modal-act-notes" rows="2" class="w-full px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none"></textarea>
                 </div>
             </div>
 
             <div class="flex gap-2 pt-2">
-                <button onclick="saveCustomActivity()" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl text-sm transition">حفظ النشاط</button>
-                <button onclick="closeActivityModal()" class="px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-sm font-semibold">إلغاء</button>
+                <button onclick="saveCustomActivity()" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl text-sm transition" data-i18n="save_act">حفظ النشاط</button>
+                <button onclick="closeActivityModal()" class="px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-sm font-semibold" data-i18n="cancel">إلغاء</button>
             </div>
         </div>
     </div>
@@ -621,218 +547,612 @@
                         <div class="w-8 h-8 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold">
                             <i class="fa-solid fa-compass"></i>
                         </div>
-                        <span class="text-lg font-black">رحلتي العربية</span>
+                        <span class="text-lg font-black" data-i18n="title">رحلتي العربية</span>
                     </div>
-                    <p class="text-slate-500 text-xs leading-relaxed">
+                    <p class="text-slate-500 text-xs leading-relaxed" data-i18n="footer_desc">
                         دليلك الذكي الأول لاستكشاف جمال الوطن العربي، برامج سياحية، نصائح سفر ومساعد ذكاء اصطناعي تفاعلي.
                     </p>
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-sm mb-3">روابط سريعة</h4>
+                    <h4 class="font-bold text-sm mb-3" data-i18n="quick_links">روابط سريعة</h4>
                     <ul class="space-y-2 text-xs text-slate-500 dark:text-slate-400">
-                        <li><button onclick="navigateTo('home')" class="hover:text-brand-600">الرئيسية</button></li>
-                        <li><button onclick="navigateTo('destinations')" class="hover:text-brand-600">الوجهات السياحية</button></li>
-                        <li><button onclick="navigateTo('ai-assistant')" class="hover:text-brand-600">المساعد الذكي AI</button></li>
-                        <li><button onclick="navigateTo('itinerary')" class="hover:text-brand-600">مسارات السفر</button></li>
+                        <li><button onclick="navigateTo('home')" class="hover:text-brand-600" data-i18n="nav_home">الرئيسية</button></li>
+                        <li><button onclick="navigateTo('destinations')" class="hover:text-brand-600" data-i18n="nav_destinations">الوجهات السياحية</button></li>
+                        <li><button onclick="navigateTo('ai-assistant')" class="hover:text-brand-600" data-i18n="nav_assistant">المساعد الذكي AI</button></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-sm mb-3">وجهات شائعة</h4>
+                    <h4 class="font-bold text-sm mb-3" data-i18n="pop_dests">وجهات شائعة</h4>
                     <ul class="space-y-2 text-xs text-slate-500 dark:text-slate-400">
                         <li><button onclick="openDestinationModal('petra')" class="hover:text-brand-600">البتراء (الأردن)</button></li>
                         <li><button onclick="openDestinationModal('alula')" class="hover:text-brand-600">العلا (السعودية)</button></li>
                         <li><button onclick="openDestinationModal('cairo')" class="hover:text-brand-600">القاهرة (مصر)</button></li>
-                        <li><button onclick="openDestinationModal('dubai')" class="hover:text-brand-600">دبي (الإمارات)</button></li>
                     </ul>
                 </div>
 
                 <div class="space-y-3">
-                    <h4 class="font-bold text-sm">النشرة البريدية السياحية</h4>
-                    <p class="text-xs text-slate-500">احصل على أحدث التوصيات والعروض السياحية العربية:</p>
+                    <h4 class="font-bold text-sm" data-i18n="newsletter">النشرة البريدية السياحية</h4>
+                    <p class="text-xs text-slate-500" data-i18n="newsletter_desc">احصل على أحدث التوصيات والعروض السياحية العربية:</p>
                     <div class="flex items-center gap-2">
-                        <input type="email" placeholder="بريدك الإلكتروني" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none">
-                        <button onclick="subscribeNewsletter()" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition">اشتراك</button>
+                        <input type="email" data-i18n-placeholder="email_placeholder" placeholder="بريدك الإلكتروني" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none">
+                        <button onclick="subscribeNewsletter()" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition" data-i18n="subscribe">اشتراك</button>
                     </div>
                 </div>
 
             </div>
 
             <div class="border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-                <p>© 2026 دليل السفر الذكي - جميع الحقوق محفوظة.</p>
-                <div class="flex items-center gap-4">
-                    <a href="#" class="hover:text-brand-600"><i class="fa-brands fa-twitter text-sm"></i></a>
-                    <a href="#" class="hover:text-brand-600"><i class="fa-brands fa-instagram text-sm"></i></a>
-                    <a href="#" class="hover:text-brand-600"><i class="fa-brands fa-youtube text-sm"></i></a>
-                </div>
+                <p>© 2026 Smart Travel Guide. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Google Translate Script Setup -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'ar',
-                includedLanguages: 'ar,en,fr,de,es,it,pt,ru,nl,pl',
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-
-        function changeLanguage(langCode) {
-            var googleSelect = document.querySelector('.goog-te-combo');
-            if (googleSelect) {
-                googleSelect.value = langCode;
-                googleSelect.dispatchEvent(new Event('change'));
-            }
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
     <script>
+        /* ==========================================================================
+           TRANSLATION DICTIONARIES (English & European Languages)
+           ========================================================================== */
+        const translations = {
+            ar: {
+                title: "رحلتي العربية",
+                subtitle: "دليل السفر الذكي AI",
+                nav_home: "الرئيسية",
+                nav_destinations: "الوجهات السياحية",
+                nav_assistant: "المساعد الذكي",
+                nav_itinerary: "مساراتي",
+                badge_ai: "ذكاء AI",
+                badge_new: "جديد",
+                plan_trip: "خطط رحلتك",
+                hero_badge: "الجيل الجديد من تخطيط السفر بالذكاء الاصطناعي",
+                hero_title: "استكشف سحر الوطن العربي بلمسة ذكية",
+                hero_desc: "من معالم العلا والتاريخ في القاهرة، إلى شواطئ البحر الأحمر وجبال البتراء. دع الذكاء الاصطناعي يرتب لك رحلة أحلامك.",
+                search_placeholder: "إلى أين تريد الذهاب؟ (مثلاً: البتراء، دبي، العلا...)",
+                search_btn: "ابحث الآن",
+                popular_searches: "الأكثر بحثاً:",
+                feat_1_title: "مساعد سفر ذكي AI",
+                feat_1_desc: "تحدث مع مساعدنا الذكي للحصول على توصيات مخصصة، إجابات للأسئلة الثقافية، وخطط سفر دقيقة.",
+                feat_2_title: "جدول يومي مخصص",
+                feat_2_desc: "حدد عدد أيام رحلتك والميزانية والاهتمامات وسيقوم النظام بإنشاء برنامج سياحي يوماً بيوم.",
+                feat_3_title: "حفظ وتصدير المفضلة",
+                feat_3_desc: "احفظ وجهاتك المفضلة ومسارات سفرك للرجوع إليها في أي وقت دون الحاجة للتسجيل.",
+                featured_tag: "وجهات مختارة",
+                featured_title: "أشهر الوجهات العربية الساحرة",
+                view_all: "عرض جميع الوجهات",
+                explore_title: "استكشف الوجهات العربية",
+                explore_desc: "تصفح أفضل المدن والمعالم السياحية في العالم العربي حسب الاهتمام أو الدولة",
+                cat_all: "الكل",
+                cat_historical: "تاريخية وتراثية",
+                cat_beach: "شواطئ واستجمام",
+                cat_adventure: "مغامرة وطبيعة",
+                cat_modern: "عصرية وترفيه",
+                filter_placeholder: "بحث باسم المدينة أو الدولة...",
+                ai_badge: "مدعوم بنموذج Gemini AI",
+                ai_title: "مساعد السفر الذكي ومخطط الرحلات",
+                ai_desc: "اسأل عن التأشيرات، الأجواء، الميزانيات، أو اطلب برنامجاً سياحياً كاملاً ليوميات سفرك",
+                quick_plan: "تخطيط سريع لرحلتك",
+                dest_label: "الوجهة المقترحة:",
+                dest_placeholder: "مثال: دبي، الشارقة، وادي رم...",
+                days_label: "عدد الأيام:",
+                budget_label: "الميزانية:",
+                generate_btn: "توليد برنامج الرحلة الذكي",
+                chat_agent_title: "المساعد السياحي الذكي",
+                chat_agent_status: "متصل الآن - جاهز للإجابة والتخطيط",
+                clear_chat: "مسح",
+                chat_welcome: "مرحباً بك! أنا مساعدك الذكي لاستكشاف السياحة في كافة الدول العربية. 🌴",
+                ai_thinking: "جاري التفكير وصياغة أفضل التوصيات...",
+                chat_placeholder: "اكتب سؤالك هنا...",
+                itinerary_title: "مساراتي وخطط السفر المحفوظة",
+                itinerary_desc: "نظّم الأماكن التي ترغب بزيارتها وأضف ملاحظاتك الشخصية",
+                add_activity_btn: "إضافة نشاط خاص",
+                saved_dests_label: "الوجهات المفضلة",
+                daily_schedule: "جدول الأنشطة اليومي",
+                clear_all: "مسح الكل",
+                modal_add_title: "إضافة نشاط للمسار",
+                act_name: "اسم النشاط / المكان:",
+                act_day: "اليوم:",
+                act_notes: "ملاحظات إضافية:",
+                save_act: "حفظ النشاط",
+                cancel: "إلغاء",
+                quick_links: "روابط سريعة",
+                pop_dests: "وجهات شائعة",
+                newsletter: "النشرة البريدية السياحية",
+                newsletter_desc: "احصل على أحدث التوصيات والعروض السياحية العربية:",
+                email_placeholder: "بريدك الإلكتروني",
+                subscribe: "اشتراك",
+                footer_desc: "دليلك الذكي الأول لاستكشاف جمال الوطن العربي، برامج سياحية، نصائح سفر ومساعد ذكاء اصطناعي تفاعلي."
+            },
+            en: {
+                title: "Arabian Journey",
+                subtitle: "AI Travel Guide",
+                nav_home: "Home",
+                nav_destinations: "Destinations",
+                nav_assistant: "AI Assistant",
+                nav_itinerary: "My Routes",
+                badge_ai: "AI Powered",
+                badge_new: "New",
+                plan_trip: "Plan Trip",
+                hero_badge: "Next Gen AI Travel Planning",
+                hero_title: "Explore the Magic of the Arab World",
+                hero_desc: "From AlUla to Cairo's history, Red Sea beaches, and Petra. Let AI build your dream custom itinerary.",
+                search_placeholder: "Where to? (e.g., Petra, Dubai, AlUla...)",
+                search_btn: "Search",
+                popular_searches: "Popular:",
+                feat_1_title: "Smart AI Travel Assistant",
+                feat_1_desc: "Chat with AI for tailored recommendations, cultural insights, and accurate trip plans.",
+                feat_2_title: "Customized Daily Itinerary",
+                feat_2_desc: "Set trip duration, budget, and interests to generate a day-by-day travel program.",
+                feat_3_title: "Save & Export Favorites",
+                feat_3_desc: "Bookmark favorite destinations and routes anytime with zero sign-up hassle.",
+                featured_tag: "Selected Destinations",
+                featured_title: "Top Magical Arab Destinations",
+                view_all: "View All Destinations",
+                explore_title: "Explore Arab Destinations",
+                explore_desc: "Browse top cities and attractions in the Arab world by interest or country.",
+                cat_all: "All",
+                cat_historical: "Historical & Heritage",
+                cat_beach: "Beaches & Relaxation",
+                cat_adventure: "Adventure & Nature",
+                cat_modern: "Modern & Entertainment",
+                filter_placeholder: "Search city or country...",
+                ai_badge: "Powered by Gemini AI",
+                ai_title: "AI Travel Assistant & Planner",
+                ai_desc: "Ask about visas, weather, budget, or get a complete customized travel itinerary.",
+                quick_plan: "Quick Trip Builder",
+                dest_label: "Destination:",
+                dest_placeholder: "e.g., Dubai, Wadi Rum, Aswan...",
+                days_label: "Days:",
+                budget_label: "Budget:",
+                generate_btn: "Generate Smart Itinerary",
+                chat_agent_title: "Smart Tourism Assistant",
+                chat_agent_status: "Online - Ready to assist",
+                clear_chat: "Clear",
+                chat_welcome: "Welcome! I am your smart assistant for exploring Arab destinations. 🌴",
+                ai_thinking: "Thinking and generating recommendations...",
+                chat_placeholder: "Type your question here...",
+                itinerary_title: "Saved Routes & Plans",
+                itinerary_desc: "Organize locations you wish to visit and add personal notes.",
+                add_activity_btn: "Add Custom Activity",
+                saved_dests_label: "Favorite Destinations",
+                daily_schedule: "Daily Activity Schedule",
+                clear_all: "Clear All",
+                modal_add_title: "Add Activity to Itinerary",
+                act_name: "Activity Name / Place:",
+                act_day: "Day:",
+                act_notes: "Additional Notes:",
+                save_act: "Save Activity",
+                cancel: "Cancel",
+                quick_links: "Quick Links",
+                pop_dests: "Popular Destinations",
+                newsletter: "Tourism Newsletter",
+                newsletter_desc: "Get top travel recommendations and offers:",
+                email_placeholder: "Your Email Address",
+                subscribe: "Subscribe",
+                footer_desc: "Your premier smart travel guide for exploring the beauty of the Arab world."
+            },
+            fr: {
+                title: "Voyage Arabe",
+                subtitle: "Guide de Voyage IA",
+                nav_home: "Accueil",
+                nav_destinations: "Destinations",
+                nav_assistant: "Assistant IA",
+                nav_itinerary: "Mes Itinéraires",
+                badge_ai: "Propulsé par IA",
+                badge_new: "Nouveau",
+                plan_trip: "Planifier",
+                hero_badge: "Planification de Voyage Nouvelle Génération",
+                hero_title: "Explorez la Magie du Monde Arabe",
+                hero_desc: "D'AlUla à l'histoire du Caire, la mer Rouge et Pétra. L'IA crée l'itinéraire de vos rêves.",
+                search_placeholder: "Où allez-vous? (ex: Pétra, Dubaï...)",
+                search_btn: "Rechercher",
+                popular_searches: "Populaires:",
+                feat_1_title: "Assistant IA Intelligent",
+                feat_1_desc: "Conseils personnalisés, culture et itinéraires précis avec notre IA.",
+                feat_2_title: "Itinéraire Personnalisé",
+                feat_2_desc: "Définissez la durée, le budget et vos intérêts pour un programme jour par jour.",
+                feat_3_title: "Sauvegarder Favoris",
+                feat_3_desc: "Enregistrez vos lieux et itinéraires préférés facilement et sans inscription.",
+                featured_tag: "Destinations Vedettes",
+                featured_title: "Meilleures Destinations Arabes",
+                view_all: "Voir Tout",
+                explore_title: "Explorer les Destinations",
+                explore_desc: "Découvrez les meilleures villes et attractions du monde arabe.",
+                cat_all: "Tout",
+                cat_historical: "Histoire & Patrimoine",
+                cat_beach: "Plages & Détente",
+                cat_adventure: "Aventure & Nature",
+                cat_modern: "Moderne & Divertissement",
+                filter_placeholder: "Rechercher une ville ou pays...",
+                ai_badge: "Propulsé par Gemini AI",
+                ai_title: "Planificateur de Voyage IA",
+                ai_desc: "Posez vos questions sur les visas, la météo, le budget ou demandez un itinéraire complet.",
+                quick_plan: "Planificateur Rapide",
+                dest_label: "Destination:",
+                dest_placeholder: "ex: Dubaï, Le Caire...",
+                days_label: "Jours:",
+                budget_label: "Budget:",
+                generate_btn: "Générer l'Itinéraire",
+                chat_agent_title: "Assistant Touristique IA",
+                chat_agent_status: "En ligne - Prêt à vous aider",
+                clear_chat: "Effacer",
+                chat_welcome: "Bienvenue! Je suis votre assistant virtuel pour découvrir le monde arabe. 🌴",
+                ai_thinking: "Génération des recommandations...",
+                chat_placeholder: "Posez votre question...",
+                itinerary_title: "Mes Trajets Enregistrés",
+                itinerary_desc: "Organisez vos visites et ajoutez vos notes personnelles.",
+                add_activity_btn: "Ajouter Activité",
+                saved_dests_label: "Destinations Favorites",
+                daily_schedule: "Programme Quotidien",
+                clear_all: "Tout Effacer",
+                modal_add_title: "Ajouter une Activité",
+                act_name: "Nom / Lieu:",
+                act_day: "Jour:",
+                act_notes: "Notes:",
+                save_act: "Enregistrer",
+                cancel: "Annuler",
+                quick_links: "Liens Rapides",
+                pop_dests: "Destinations Populaires",
+                newsletter: "Newsletter Voyage",
+                newsletter_desc: "Recevez nos dernières offres et guides:",
+                email_placeholder: "Votre email",
+                subscribe: "S'abonner",
+                footer_desc: "Votre guide de voyage intelligent pour découvrir le monde arabe."
+            },
+            es: {
+                title: "Viaje Árabe",
+                subtitle: "Guía de Viajes IA",
+                nav_home: "Inicio",
+                nav_destinations: "Destinos",
+                nav_assistant: "Asistente IA",
+                nav_itinerary: "Mis Rutas",
+                badge_ai: "Con IA",
+                badge_new: "Nuevo",
+                plan_trip: "Planificar",
+                hero_badge: "Planificación de Viajes de Última Generación",
+                hero_title: "Explora la Magia del Mundo Árabe",
+                hero_desc: "Desde AlUla hasta la historia de El Cairo y Petra. Deja que la IA organice tu viaje ideal.",
+                search_placeholder: "¿A dónde quieres ir? (ej: Petra, Dubái...)",
+                search_btn: "Buscar",
+                popular_searches: "Populares:",
+                feat_1_title: "Asistente IA Inteligente",
+                feat_1_desc: "Obtén recomendaciones personalizadas y planes detallados con IA.",
+                feat_2_title: "Itinerario Diario",
+                feat_2_desc: "Genera un itinerario paso a paso según tus días y presupuesto.",
+                feat_3_title: "Guardar Favoritos",
+                feat_3_desc: "Guarda tus destinos y rutas favoritas sin complicaciones.",
+                featured_tag: "Destinos Destacados",
+                featured_title: "Mejores Destinos Árabes",
+                view_all: "Ver Todos",
+                explore_title: "Explorar Destinos Árabes",
+                explore_desc: "Descubre las mejores ciudades y lugares de interés.",
+                cat_all: "Todos",
+                cat_historical: "Historia y Patrimonio",
+                cat_beach: "Playas y Relax",
+                cat_adventure: "Aventura y Naturaleza",
+                cat_modern: "Moderno y Ocio",
+                filter_placeholder: "Buscar ciudad o país...",
+                ai_badge: "Impulsado por Gemini AI",
+                ai_title: "Asistente de Viajes IA",
+                ai_desc: "Pregunta sobre visados, clima, presupuesto o genera tu plan completo.",
+                quick_plan: "Creador Rápido de Viaje",
+                dest_label: "Destino:",
+                dest_placeholder: "ej: Dubái, Petra...",
+                days_label: "Días:",
+                budget_label: "Presupuesto:",
+                generate_btn: "Generar Itinerario",
+                chat_agent_title: "Asistente de Turístico",
+                chat_agent_status: "En línea - Listo para ayudar",
+                clear_chat: "Limpiar",
+                chat_welcome: "¡Bienvenido! Soy tu asistente inteligente para explorar el mundo árabe. 🌴",
+                ai_thinking: "Generando mejores recomendaciones...",
+                chat_placeholder: "Escribe tu pregunta...",
+                itinerary_title: "Rutas Guardadas",
+                itinerary_desc: "Organiza tus visitas y añade notas personales.",
+                add_activity_btn: "Añadir Actividad",
+                saved_dests_label: "Destinos Favoritos",
+                daily_schedule: "Horario Diario",
+                clear_all: "Borrar Todo",
+                modal_add_title: "Añadir Actividad",
+                act_name: "Nombre / Lugar:",
+                act_day: "Día:",
+                act_notes: "Notas:",
+                save_act: "Guardar",
+                cancel: "Cancelar",
+                quick_links: "Enlaces Rápidos",
+                pop_dests: "Destinos Populares",
+                newsletter: "Boletín de Viajes",
+                newsletter_desc: "Recibe ofertas y guías exclusivas:",
+                email_placeholder: "Tu correo electrónico",
+                subscribe: "Suscribirse",
+                footer_desc: "Tu guía inteligente para descubrir la belleza del mundo árabe."
+            },
+            de: {
+                title: "Arabische Reise",
+                subtitle: "KI Reiseführer",
+                nav_home: "Startseite",
+                nav_destinations: "Reiseziele",
+                nav_assistant: "KI-Assistent",
+                nav_itinerary: "Meine Routen",
+                badge_ai: "KI-Unterstützt",
+                badge_new: "Neu",
+                plan_trip: "Reise Planen",
+                hero_badge: "KI-Reiseplanung der nächsten Generation",
+                hero_title: "Entdecken Sie den Zauber der arabischen Welt",
+                hero_desc: "Von AlUla über die Geschichte Kairo bis Petra. Lassen Sie die KI Ihre Traumreise planen.",
+                search_placeholder: "Wohin solls gehen? (z.B. Petra, Dubai...)",
+                search_btn: "Suchen",
+                popular_searches: "Beliebt:",
+                feat_1_title: "Intelligenter KI-Assistent",
+                feat_1_desc: "Empfehlungen, Kulturtipps und genaue Reisepläne durch KI.",
+                feat_2_title: "Personalisierter Tagesplan",
+                feat_2_desc: "Erstellen Sie Tag-für-Tag-Programme nach Budget und Vorlieben.",
+                feat_3_title: "Favoriten Speichern",
+                feat_3_desc: "Speichern Sie Lieblingsorte jederzeit ohne Registrierung.",
+                featured_tag: "Ausgewählte Reiseziele",
+                featured_title: "Top Arabische Reiseziele",
+                view_all: "Alle Anzeigen",
+                explore_title: "Arabische Reiseziele Erkunden",
+                explore_desc: "Entdecken Sie die besten Städte und Sehenswürdigkeiten.",
+                cat_all: "Alle",
+                cat_historical: "Geschichte & Kultur",
+                cat_beach: "Strand & Erholung",
+                cat_adventure: "Abenteuer & Natur",
+                cat_modern: "Modern & Unterhaltung",
+                filter_placeholder: "Stadt oder Land suchen...",
+                ai_badge: "Unterstützt durch Gemini AI",
+                ai_title: "KI-Reiseplaner & Assistent",
+                ai_desc: "Fragen Sie nach Visum, Wetter, Budget oder vollständigen Reiseplänen.",
+                quick_plan: "Schnell-Reiseplaner",
+                dest_label: "Reiseziel:",
+                dest_placeholder: "z.B. Dubai, Kairo...",
+                days_label: "Tage:",
+                budget_label: "Budget:",
+                generate_btn: "Reiseplan Erstellen",
+                chat_agent_title: "KI-Tourismusassistent",
+                chat_agent_status: "Online - Bereit zu helfen",
+                clear_chat: "Löschen",
+                chat_welcome: "Willkommen! Ich bin Ihr KI-Assistent für arabische Reiseziele. 🌴",
+                ai_thinking: "Generiere Empfehlungen...",
+                chat_placeholder: "Ihre Frage eingeben...",
+                itinerary_title: "Gespeicherte Routen",
+                itinerary_desc: "Organisieren Sie Orte und fügen Sie Notizen hinzu.",
+                add_activity_btn: "Aktivität Hinzufügen",
+                saved_dests_label: "Lieblingsreiseziele",
+                daily_schedule: "Tagesplan",
+                clear_all: "Alles Löschen",
+                modal_add_title: "Aktivität Hinzufügen",
+                act_name: "Aktivität / Ort:",
+                act_day: "Tag:",
+                act_notes: "Notizen:",
+                save_act: "Speichern",
+                cancel: "Abbrechen",
+                quick_links: "Quick-Links",
+                pop_dests: "Beliebte Reiseziele",
+                newsletter: "Reise-Newsletter",
+                newsletter_desc: "Erhalten Sie aktuelle Angebote und Empfehlungen:",
+                email_placeholder: "Ihre E-Mail-Adresse",
+                subscribe: "Abonnieren",
+                footer_desc: "Ihr intelligenter Reiseführer für die arabische Welt."
+            },
+            it: {
+                title: "Viaggio Arabo",
+                subtitle: "Guida Turistica IA",
+                nav_home: "Home",
+                nav_destinations: "Destinazioni",
+                nav_assistant: "Assistente IA",
+                nav_itinerary: "Miei Itinerari",
+                badge_ai: "Supporto IA",
+                badge_new: "Nuovo",
+                plan_trip: "Pianifica Viaggio",
+                hero_badge: "Pianificazione Viaggi di Nuova Generazione",
+                hero_title: "Esplora la Magia del Mondo Arabo",
+                hero_desc: "Da AlUla alla storia del Cairo, Petra e il Mar Rosso. L'IA crea il viaggio dei tuoi sogni.",
+                search_placeholder: "Dove vuoi andare? (es. Petra, Dubai...)",
+                search_btn: "Cerca",
+                popular_searches: "Popolari:",
+                feat_1_title: "Assistente IA Intelligente",
+                feat_1_desc: "Consigli personalizzati e itinerari accurati guidati dall'IA.",
+                feat_2_title: "Programma Giornaliero",
+                feat_2_desc: "Crea itinerari giorno per giorno in base a budget e interessi.",
+                feat_3_title: "Salva Preferiti",
+                feat_3_desc: "Salva destinazioni e percorsi preferiti senza alcuna registrazione.",
+                featured_tag: "Destinazioni Selezionate",
+                featured_title: "Le Migliori Destinazioni Arabe",
+                view_all: "Mostra Tutte",
+                explore_title: "Esplora Destinazioni Arabe",
+                explore_desc: "Scopri le migliori città e attrazioni nel mondo arabo.",
+                cat_all: "Tutti",
+                cat_historical: "Storia e Cultura",
+                cat_beach: "Spiagge e Relax",
+                cat_adventure: "Avventura e Natura",
+                cat_modern: "Moderno e Intrattenimento",
+                filter_placeholder: "Cerca città o paese...",
+                ai_badge: "Powered by Gemini AI",
+                ai_title: "Pianificatore di Viaggio IA",
+                ai_desc: "Chiedi informazioni su visti, meteo, budget o richiedi un itinerario completo.",
+                quick_plan: "Pianificatore Rapido",
+                dest_label: "Destinazione:",
+                dest_placeholder: "es. Dubai, Il Cairo...",
+                days_label: "Giorni:",
+                budget_label: "Budget:",
+                generate_btn: "Genera Itinerario",
+                chat_agent_title: "Assistente Turistico IA",
+                chat_agent_status: "Online - Pronto ad aiutarti",
+                clear_chat: "Pulisci",
+                chat_welcome: "Benvenuto! Sono il tuo assistente virtuale per il mondo arabo. 🌴",
+                ai_thinking: "Generazione dei consigli in corso...",
+                chat_placeholder: "Scrivi la tua domanda...",
+                itinerary_title: "Itinerari Salvati",
+                itinerary_desc: "Organizza le tue visite e aggiungi note personali.",
+                add_activity_btn: "Aggiungi Attività",
+                saved_dests_label: "Destinazioni Preferite",
+                daily_schedule: "Programma Giornaliero",
+                clear_all: "Cancella Tutto",
+                modal_add_title: "Aggiungi Attività",
+                act_name: "Nome / Luogo:",
+                act_day: "Giorno:",
+                act_notes: "Note:",
+                save_act: "Salva",
+                cancel: "Annulla",
+                quick_links: "Link Rapidi",
+                pop_dests: "Destinazioni Popolari",
+                newsletter: "Newsletter Viaggi",
+                newsletter_desc: "Ricevi le ultime offerte e consigli:",
+                email_placeholder: "La tua email",
+                subscribe: "Iscriviti",
+                footer_desc: "La tua guida intelligente per esplorare il mondo arabo."
+            }
+        };
+
+        let currentLang = localStorage.getItem('app_lang') || 'ar';
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('app_lang', lang);
+            
+            // Toggle Text Direction (RTL for Arabic, LTR for European Languages)
+            if (lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', lang);
+            }
+
+            // Update DOM Static Text
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            // Update Placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+
+            // Re-render components with language aware elements
+            renderFeaturedDestinations();
+            renderAllDestinations();
+            updateSavedUI();
+            renderItineraryDays();
+        }
+
         /* ==========================================================================
            DATA STORE: Destinations & Initial Itineraries
            ========================================================================== */
         const destinationsData = [
             {
                 id: 'petra',
-                name: 'البتراء',
-                country: 'الأردن 🇯🇴',
+                name: 'البتراء / Petra',
+                country: 'الأردن 🇯🇴 / Jordan',
                 category: 'historical',
                 categoryLabel: 'تاريخية وتراثية',
                 rating: '4.9',
                 image: 'https://images.unsplash.com/photo-1579606030852-82695eef58e8?auto=format&fit=crop&q=80&w=800',
                 shortDesc: 'المدينة الوردية المنحوتة في الصخور، إحدى عجائب الدنيا السبع الجديدة.',
                 longDesc: 'البتراء هي عاصمة الأنباط القديمة، تمتاز بمعمارها المنحوت في الصخور الورديّة الشاهقة. يمكنك السير عبر "السيق" الرائع للوصول إلى الخزنة، ثم استكشاف الدير والمدرج النبطي ومحطات التاريخ الخالدة.',
-                bestTime: 'من أكتوبر إلى أبريل',
-                avgCost: 'متوسطة (70-120$ يومياً)',
-                highlights: ['السيق والخزنة', 'الدير (المدبح)', 'عرض البتراء ليلاً بالشموع', 'وادي رم المجاور']
+                bestTime: 'من أكتوبر إلى أبريل / Oct to Apr',
+                avgCost: '70-120$ / Day',
+                highlights: ['السيق والخزنة / The Siq & Treasury', 'الدير / The Monastery', 'البتراء ليلاً / Petra by Night', 'وادي رم / Wadi Rum']
             },
             {
                 id: 'alula',
-                name: 'العُلا',
-                country: 'السعودية 🇸🇦',
+                name: 'العُلا / AlUla',
+                country: 'السعودية 🇸🇦 / Saudi Arabia',
                 category: 'historical',
                 categoryLabel: 'تاريخية وتراثية',
                 rating: '4.9',
                 image: 'https://images.unsplash.com/photo-1682687220063-4742bd7fd538?auto=format&fit=crop&q=80&w=800',
                 shortDesc: 'متحف حي ومفتوح للآثار والطبيعة الصحراوية الساحرة في الحجر.',
                 longDesc: 'تعتبر العلا موقعاً مدرجاً في التراث العالمي لليونسكو (الحِجر)، وتجمع بين التشكيلات الصخرية الفريدة مثل صخرة الفيل ومسرح مرايا الفاخر مع مقابر الأنباط المحفورة في الجبال.',
-                bestTime: 'من نوفمبر إلى مارس',
-                avgCost: 'فاخرة / متوسطة',
-                highlights: ['موقع الحجر التاريخي', 'صخرة الفيل', 'مسرح مرايا', 'مهرجان شتاء طنطورة']
+                bestTime: 'من نوفمبر إلى مارس / Nov to Mar',
+                avgCost: 'Premium / Luxury',
+                highlights: ['موقع الحجر / Hegra UNESCO site', 'صخرة الفيل / Elephant Rock', 'مسرح مرايا / Maraya Social', 'شتاء طنطورة / Winter at Tantora']
             },
             {
                 id: 'dubai',
-                name: 'دبي',
-                country: 'الإمارات 🇦🇪',
+                name: 'دبي / Dubai',
+                country: 'الإمارات 🇦🇪 / UAE',
                 category: 'modern',
                 categoryLabel: 'عصرية وترفيه',
                 rating: '4.8',
                 image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800',
                 shortDesc: 'عاصمة الحداثة العالمية، ناطحات السحاب الفارهة والمغامرات الاستثنائية.',
                 longDesc: 'دبي هي وجهة الفخامة والابتكار، تضم برج خليفة الأطول في العالم، دبي مول، عين دبي، ومتحف المستقبل، إلى جانب رحلات السفاري الصحراوية والمنتجعات الشاطئية.',
-                bestTime: 'من نوفمبر إلى أبريل',
-                avgCost: 'مرتفعة إلى فاخرة',
-                highlights: ['برج خليفة', 'متحف المستقبل', 'سفاري دبي الصحراوي', 'نخلة جميرا']
+                bestTime: 'من نوفمبر إلى أبريل / Nov to Apr',
+                avgCost: 'High / Luxury',
+                highlights: ['برج خليفة / Burj Khalifa', 'متحف المستقبل / Museum of the Future', 'سفاري الصحراء / Desert Safari', 'نخلة جميرا / Palm Jumeirah']
             },
             {
                 id: 'cairo',
-                name: 'القاهرة',
-                country: 'مصر 🇪🇬',
+                name: 'القاهرة / Cairo',
+                country: 'مصر 🇪🇬 / Egypt',
                 category: 'historical',
                 categoryLabel: 'تاريخية وتراثية',
                 rating: '4.7',
                 image: 'https://images.unsplash.com/photo-1572252009286-268acec5ca0a?auto=format&fit=crop&q=80&w=800',
                 shortDesc: 'أم الدنيا، تاريخ الفراعنة العريق وشوارع خان الخليلي الأثرية.',
                 longDesc: 'تاريخ نابض بالحياة، يجمع بين أهرامات الجيزة الخالدة والمتحف المصري الكبير، إلى جانب سحر القاهرة المعزية والمقاهي التاريخية على ضفاف نهر النيل.',
-                bestTime: 'من أكتوبر إلى مارس',
-                avgCost: 'اقتصادية إلى متوسطة',
-                highlights: ['أهرامات الجيزة والأبول هول', 'المتحف المصري الكبير', 'خان الخليلي', 'جولة النيل بالفلُك']
+                bestTime: 'من أكتوبر إلى مارس / Oct to Mar',
+                avgCost: 'Budget / Medium',
+                highlights: ['أهرامات الجيزة / Giza Pyramids', 'المتحف الكبير / GEM Museum', 'خان الخليلي / Khan el-Khalili', 'جولة النيل / Nile Cruise']
             },
             {
                 id: 'salalah',
-                name: 'صلالة',
-                country: 'سلطنة عمان 🇴🇲',
+                name: 'صلالة / Salalah',
+                country: 'سلطنة عمان 🇴🇲 / Oman',
                 category: 'adventure',
                 categoryLabel: 'مغامرة وطبيعة',
                 rating: '4.8',
                 image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&q=80&w=800',
                 shortDesc: 'واحة الشلالات والجبال الخضراء الساحرة خلال موسم الخريف.',
                 longDesc: 'تتحول صلالة في الصيف (موسم الخريف) إلى جنة خضراء ضبابية مع شلالات وادي دربات وجبال ظفار الرائعة والشواطئ النقية على المحيط الهندي.',
-                bestTime: 'من يوليو إلى سبتمبر (موسم الخريف)',
-                avgCost: 'متوسطة',
-                highlights: ['وادي دربات والشلالات', 'عين كور', 'شاطئ المغسيل والنافورات الطبيعية', 'جبال ظفار']
+                bestTime: 'من يوليو إلى سبتمبر / Jul to Sep',
+                avgCost: 'Medium',
+                highlights: ['وادي دربات / Wadi Darbat', 'عين كور / Ayn Khor', 'شاطئ المغسيل / Al Mughsail Beach', 'جبال ظفار / Dhofar Mountains']
             },
             {
                 id: 'marrakech',
-                name: 'مراكش',
-                country: 'المغرب 🇲🇦',
+                name: 'مراكش / Marrakech',
+                country: 'المغرب 🇲🇦 / Morocco',
                 category: 'historical',
                 categoryLabel: 'تاريخية وتراثية',
                 rating: '4.9',
                 image: 'https://images.unsplash.com/photo-1597212618440-806262de4f6b?auto=format&fit=crop&q=80&w=800',
                 shortDesc: 'المدينة الحمراء، ساحة جامع الفناء وأسواق الصناعات التقليدية.',
                 longDesc: 'مدينة الألوان والروائح والمذاقات. تشتهر بساحة جامع الفناء النابضة بالحياة ليلاً، حدائق ماجوريل، قصر الباهية، والرياضات التقليدية ذات الفناء المفتوح.',
-                bestTime: 'من مارس إلى مايو ومن سبتمبر إلى نوفمبر',
-                avgCost: 'اقتصادية إلى متوسطة',
-                highlights: ['ساحة جامع الفناء', 'حديقة ماجوريل', 'قصر الباهية', 'أسواق المدينة القديمة']
-            },
-            {
-                id: 'hurghada',
-                name: 'الغردقة وشرم الشيخ',
-                country: 'مصر 🇪🇬',
-                category: 'beach',
-                categoryLabel: 'شواطئ واستجمام',
-                rating: '4.8',
-                image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800',
-                shortDesc: 'عالم الشعب المرجانية والغوص في أنقى مياه البحر الأحمر.',
-                longDesc: 'عاصمة الرياضات المائية والغوص العالمية، تضم محمية رأس محمد والجزر المرجانية، بالإضافة للانتجاعات الشاطئية الفاخرة ورحلات رحلات السفاري.',
-                bestTime: 'على مدار العام',
-                avgCost: 'اقتصادية إلى متوسطة',
-                highlights: ['الغوص في رأس محمد', 'رحلة جزيرة جفتون', 'العروض المائية', 'سفاري البيتش باجي']
-            },
-            {
-                id: 'beirut',
-                name: 'بيروت وجبال لبنان',
-                country: 'لبنان 🇱🇧',
-                category: 'adventure',
-                categoryLabel: 'مغامرة وطبيعة',
-                rating: '4.6',
-                image: 'https://images.unsplash.com/photo-1578895210405-907db48a7812?auto=format&fit=crop&q=80&w=800',
-                shortDesc: 'باريس الشرق، طبيعة الجبال الخضراء، مغارة جعيتا ومأكولات لا تُقاوم.',
-                longDesc: 'تجمع بين الثقافة العريقة والأجواء الترفيهية. من الروشة في بيروت إلى مغارة جعيتا العجيبة والغابات والقمم الجبلية في فاريا وأرز الرب.',
-                bestTime: 'من مايو إلى أكتوبر',
-                avgCost: 'متوسطة',
-                highlights: ['صخرة الروشة', 'مغارة جعيتا', 'تلفريك حريصا', 'غابات الأرز']
+                bestTime: 'Mar-May & Sep-Nov',
+                avgCost: 'Budget / Medium',
+                highlights: ['جامع الفناء / Jemaa el-Fnaa', 'حديقة ماجوريل / Majorelle Garden', 'قصر الباهية / Bahia Palace', 'الأسواق القديمة / Medina Souks']
             }
         ];
 
         // State Management
         let savedDestinations = JSON.parse(localStorage.getItem('saved_dests') || '["petra", "alula"]');
         let customActivities = JSON.parse(localStorage.getItem('custom_activities') || JSON.stringify([
-            { id: 1, day: 'اليوم الأول', title: 'زيارة السيق والخزنة في البتراء', notes: 'الوصول مبكراً في الساعة 8 صباحاً لتفادي الزحام' },
-            { id: 2, day: 'اليوم الأول', title: 'عشاء تقليدي في وادي رم', notes: 'تجربة طهي الزرب النبطي تحت النجوم' },
-            { id: 3, day: 'اليوم الثاني', title: 'جولة الحجر وصخرة الفيل في العلا', notes: 'حجز التذاكر مسبقاً عبر التطبيق' }
+            { id: 1, day: 'اليوم الأول', title: 'زيارة السيق والخزنة في البتراء / Visit Treasury', notes: 'الوصول مبكراً في الساعة 8 صباحاً' },
+            { id: 2, day: 'اليوم الأول', title: 'عشاء تقليدي في وادي رم / Zarb Dinner', notes: 'تجربة طهي الزرب تحت النجوم' },
+            { id: 3, day: 'اليوم الثاني', title: 'جولة الحجر وصخرة الفيل / Hegra Tour', notes: 'حجز التذاكر مسبقاً' }
         ]));
 
         /* ==========================================================================
            ROUTER & NAVIGATION SYSTEM
            ========================================================================== */
         function navigateTo(pageId) {
-            // Hide all pages
             document.querySelectorAll('.page-view').forEach(page => {
                 page.classList.add('page-hidden');
             });
 
-            // Show selected page
             const targetPage = document.getElementById(`page-${pageId}`);
             if (targetPage) {
                 targetPage.classList.remove('page-hidden');
             }
 
-            // Update active state on menu links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
             });
@@ -841,7 +1161,6 @@
                 activeNav.classList.add('active');
             }
 
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -876,21 +1195,22 @@
 
         function createDestinationCardHTML(dest) {
             const isSaved = savedDestinations.includes(dest.id);
+            const exploreBtnText = currentLang === 'ar' ? 'استكشف التفاصيل' : 'Explore Details';
             return `
                 <div class="glass-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-2xl transition-all duration-300 flex flex-col group">
                     <div class="relative h-48 overflow-hidden">
                         <img src="${dest.image}" alt="${dest.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
                         
-                        <span class="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-md text-white text-xs px-2.5 py-1 rounded-full font-semibold">
+                        <span class="absolute top-3 rtl:right-3 ltr:left-3 bg-slate-900/70 backdrop-blur-md text-white text-xs px-2.5 py-1 rounded-full font-semibold">
                             ${dest.country}
                         </span>
 
-                        <button onclick="toggleBookmark('${dest.id}', event)" class="absolute top-3 left-3 w-8 h-8 rounded-full bg-white/80 dark:bg-slate-900/80 text-amber-500 flex items-center justify-center hover:scale-110 transition">
+                        <button onclick="toggleBookmark('${dest.id}', event)" class="absolute top-3 rtl:left-3 ltr:right-3 w-8 h-8 rounded-full bg-white/80 dark:bg-slate-900/80 text-amber-500 flex items-center justify-center hover:scale-110 transition">
                             <i class="${isSaved ? 'fa-solid' : 'fa-regular'} fa-bookmark"></i>
                         </button>
 
-                        <div class="absolute bottom-3 right-3 text-white">
+                        <div class="absolute bottom-3 rtl:right-3 ltr:left-3 text-white">
                             <span class="text-xs bg-brand-600/90 font-bold px-2 py-0.5 rounded-md">
                                 <i class="fa-solid fa-star text-amber-300 text-[10px]"></i> ${dest.rating}
                             </span>
@@ -906,7 +1226,7 @@
                         <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                             <span class="text-xs text-brand-600 dark:text-brand-400 font-semibold">${dest.categoryLabel}</span>
                             <button onclick="openDestinationModal('${dest.id}')" class="text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white px-3.5 py-2 rounded-xl transition">
-                                استكشف التفاصيل
+                                ${exploreBtnText}
                             </button>
                         </div>
                     </div>
@@ -977,7 +1297,7 @@
 
             const listContainer = document.getElementById('saved-destinations-list');
             if (savedDestinations.length === 0) {
-                listContainer.innerHTML = `<p class="text-xs text-slate-500 py-4 text-center">لم تقم بحفظ أي وجهة بعد.</p>`;
+                listContainer.innerHTML = `<p class="text-xs text-slate-500 py-4 text-center">No saved destinations yet.</p>`;
                 return;
             }
 
@@ -1012,7 +1332,7 @@
                 daysContainer.innerHTML = `
                     <div class="glass-card p-8 rounded-2xl text-center text-slate-500">
                         <i class="fa-solid fa-calendar-xmark text-3xl mb-2 block"></i>
-                        <p>لا يوجد أنشطة مضافة لبرنامجك حالياً. أضف نشاطك الأول الآن!</p>
+                        <p>No activities added yet.</p>
                     </div>
                 `;
                 return;
@@ -1021,8 +1341,8 @@
             daysContainer.innerHTML = Object.keys(grouped).map(dayTitle => `
                 <div class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3">
                     <h3 class="font-bold text-brand-600 dark:text-brand-400 border-b border-slate-200 dark:border-slate-800 pb-2 flex items-center justify-between">
-                        <span><i class="fa-regular fa-calendar-days ml-2"></i> ${dayTitle}</span>
-                        <span class="text-xs text-slate-400 font-normal">${grouped[dayTitle].length} أنشطة</span>
+                        <span><i class="fa-regular fa-calendar-days mx-2"></i> ${dayTitle}</span>
+                        <span class="text-xs text-slate-400 font-normal">${grouped[dayTitle].length} activities</span>
                     </h3>
 
                     <div class="space-y-2">
@@ -1054,7 +1374,7 @@
             const day = document.getElementById('modal-act-day').value;
             const notes = document.getElementById('modal-act-notes').value.trim();
 
-            if (!title) return alert('الرجاء كتابة اسم النشاط');
+            if (!title) return alert('Enter activity name');
 
             const newAct = {
                 id: Date.now(),
@@ -1068,7 +1388,6 @@
             renderItineraryDays();
             closeActivityModal();
 
-            // Reset inputs
             document.getElementById('modal-act-title').value = '';
             document.getElementById('modal-act-notes').value = '';
         }
@@ -1080,7 +1399,7 @@
         }
 
         function clearAllActivities() {
-            if (confirm('هل أنت تأكد من مسح جميع الأنشطة؟')) {
+            if (confirm('Are you sure you want to clear all activities?')) {
                 customActivities = [];
                 localStorage.setItem('custom_activities', JSON.stringify(customActivities));
                 renderItineraryDays();
@@ -1088,21 +1407,19 @@
         }
 
         /* ==========================================================================
-           GEMINI AI API INTEGRATION (Chat & Travel Planner)
+           GEMINI AI API INTEGRATION
            ========================================================================== */
-        const systemPrompt = `أنت "رحالة"، مساعد السفر السياحي الذكي الخبير في شؤون الوطن العربي والدول العربية. 
-إجاباتك دائماً باللغة العربية بأسلوب ودود، مشجع، ومعلوماتي دقيق. 
-عند تنظيم خطط السفر، قسمها يوماً بيوم مع ذكر النصائح الثقافية، الأطعمة الشهيرة، والتقديرات المالية التقريبية.
-ركز على جمال السياحة والتاريخ في العالم العربي.`;
-
         async function callGeminiAPI(userPrompt) {
             const apiKey = ""; // Canvas runtime environment automatically inserts key
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
+            const langInstruction = `Please answer in the language code: ${currentLang}.`;
+            const systemPrompt = `You are a helpful travel assistant expert in Arab world tourism. Answer in target language code (${currentLang}). Be friendly and detailed.`;
+
             const payload = {
                 contents: [{ parts: [{ text: userPrompt }] }],
                 systemInstruction: {
-                    parts: [{ text: systemPrompt }]
+                    parts: [{ text: systemPrompt + " " + langInstruction }]
                 }
             };
 
@@ -1113,11 +1430,11 @@
             });
 
             if (!response.ok) {
-                throw new Error('فشل الاتصال بخدمة الذكاء الاصطناعي.');
+                throw new Error('API connection failed.');
             }
 
             const result = await response.json();
-            return result.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أستطع الحصول على إجابة في الوقت الحالي.";
+            return result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, couldn't retrieve a response.";
         }
 
         function appendMessage(sender, text) {
@@ -1127,19 +1444,18 @@
             if (sender === 'user') {
                 msgDiv.className = "flex justify-end gap-3";
                 msgDiv.innerHTML = `
-                    <div class="bg-brand-600 text-white p-4 rounded-2xl rounded-tl-none max-w-[85%] leading-relaxed text-sm">
+                    <div class="bg-brand-600 text-white p-4 rounded-2xl rtl:rounded-tl-none ltr:rounded-tr-none max-w-[85%] leading-relaxed text-sm">
                         ${text}
                     </div>
                 `;
             } else {
-                // Formatted markdown/newlines
                 const formattedText = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 msgDiv.className = "flex gap-3";
                 msgDiv.innerHTML = `
                     <div class="w-8 h-8 rounded-lg bg-brand-600 text-white flex-shrink-0 flex items-center justify-center text-xs">
                         <i class="fa-solid fa-robot"></i>
                     </div>
-                    <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-4 rounded-2xl rounded-tr-none max-w-[85%] leading-relaxed text-sm">
+                    <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-4 rounded-2xl rtl:rounded-tr-none ltr:rounded-tl-none max-w-[85%] leading-relaxed text-sm">
                         ${formattedText}
                     </div>
                 `;
@@ -1165,26 +1481,18 @@
                 const aiReply = await callGeminiAPI(prompt);
                 appendMessage('ai', aiReply);
             } catch (err) {
-                appendMessage('ai', 'تعذر الحصول على رد من الذكاء الاصطناعي حالياً، يرجى المحاولة لاحقاً.');
+                appendMessage('ai', 'Error generating AI response.');
             } finally {
                 loading.classList.add('hidden');
             }
         }
 
-        function sendQuickPrompt(promptText) {
-            document.getElementById('chat-input').value = promptText;
-            handleChatSubmit();
-        }
-
         async function generateAITripPlan() {
-            const dest = document.getElementById('ai-destination').value.trim() || 'دبي والأردن';
+            const dest = document.getElementById('ai-destination').value.trim() || 'Dubai & Jordan';
             const days = document.getElementById('ai-days').value;
             const budget = document.getElementById('ai-budget').value;
-            
-            const selectedInterests = Array.from(document.querySelectorAll('.ai-interest:checked'))
-                .map(cb => cb.value).join('، ') || 'عامة';
 
-            const generatedPrompt = `قم بإعداد برنامج سياحي مقسم يوماً بيوم لزيارة (${dest}) لمدة (${days} أيام) بميزانية (${budget}). الاهتمامات الرئيسية: (${selectedInterests}). اذكر أهم المعالم الأنشطة اليومية والنصائح.`;
+            const generatedPrompt = `Create a ${days}-day itinerary for ${dest} with budget level: ${budget} in ${currentLang} language.`;
 
             document.getElementById('chat-input').value = generatedPrompt;
             handleChatSubmit();
@@ -1197,8 +1505,8 @@
                     <div class="w-8 h-8 rounded-lg bg-brand-600 text-white flex-shrink-0 flex items-center justify-center text-xs">
                         <i class="fa-solid fa-robot"></i>
                     </div>
-                    <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-4 rounded-2xl rounded-tr-none max-w-[85%] leading-relaxed">
-                        مرحباً بك مجدداً! كيف يمكنني مساعدتك في رحلتك القادمة؟
+                    <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-4 rounded-2xl max-w-[85%] leading-relaxed">
+                        ${translations[currentLang].chat_welcome}
                     </div>
                 </div>
             `;
@@ -1218,7 +1526,7 @@
                 <div class="relative h-64 sm:h-80 w-full overflow-hidden">
                     <img src="${dest.image}" alt="${dest.name}" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-                    <div class="absolute bottom-6 right-6 text-white space-y-1">
+                    <div class="absolute bottom-6 rtl:right-6 ltr:left-6 text-white space-y-1">
                         <span class="bg-brand-600 text-xs font-bold px-3 py-1 rounded-full">${dest.country}</span>
                         <h2 class="text-3xl font-black">${dest.name}</h2>
                     </div>
@@ -1227,26 +1535,25 @@
                 <div class="p-6 md:p-8 space-y-6">
                     <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4 text-sm">
                         <div>
-                            <span class="text-slate-400 block text-xs">أفضل وقت للزيارة:</span>
-                            <span class="font-bold"><i class="fa-regular fa-calendar text-brand-600 ml-1"></i> ${dest.bestTime}</span>
+                            <span class="text-slate-400 block text-xs">Best time:</span>
+                            <span class="font-bold">${dest.bestTime}</span>
                         </div>
                         <div>
-                            <span class="text-slate-400 block text-xs">مستوى التكلفة:</span>
-                            <span class="font-bold"><i class="fa-solid fa-wallet text-amber-500 ml-1"></i> ${dest.avgCost}</span>
+                            <span class="text-slate-400 block text-xs">Cost level:</span>
+                            <span class="font-bold">${dest.avgCost}</span>
                         </div>
                         <div>
-                            <span class="text-slate-400 block text-xs">التقييم العام:</span>
-                            <span class="font-bold text-amber-500"><i class="fa-solid fa-star ml-1"></i> ${dest.rating} / 5</span>
+                            <span class="text-slate-400 block text-xs">Rating:</span>
+                            <span class="font-bold text-amber-500">${dest.rating} / 5</span>
                         </div>
                     </div>
 
                     <div class="space-y-3">
-                        <h3 class="font-bold text-lg">عن الوجهة</h3>
                         <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">${dest.longDesc}</p>
                     </div>
 
                     <div class="space-y-3">
-                        <h3 class="font-bold text-lg">أبرز المعالم والأنشطة</h3>
+                        <h3 class="font-bold text-lg">Highlights</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                             ${dest.highlights.map(h => `
                                 <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-100 dark:bg-slate-800">
@@ -1258,13 +1565,8 @@
                     </div>
 
                     <div class="pt-4 flex flex-col sm:flex-row gap-3">
-                        <button onclick="toggleBookmark('${dest.id}'); closeModal();" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl text-sm transition flex items-center justify-center gap-2">
-                            <i class="${isSaved ? 'fa-solid' : 'fa-regular'} fa-bookmark"></i>
-                            <span>${isSaved ? 'إزالة من المحفوظات' : 'حفظ الوجهة'}</span>
-                        </button>
-                        <button onclick="closeModal(); navigateTo('ai-assistant'); sendQuickPrompt('خطط لي رحلة إلى ${dest.name} لمدة 4 أيام');" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl text-sm transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-robot"></i>
-                            <span>تخطيط رحلة مع AI</span>
+                        <button onclick="toggleBookmark('${dest.id}'); closeModal();" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl text-sm transition">
+                            ${isSaved ? 'Remove Bookmark' : 'Save Destination'}
                         </button>
                     </div>
                 </div>
@@ -1278,7 +1580,7 @@
         }
 
         function subscribeNewsletter() {
-            alert('شكراً لااشتراكك في النشرة السياحية الخاصة بنا!');
+            alert('Thank you for subscribing!');
         }
 
         /* ==========================================================================
@@ -1291,21 +1593,16 @@
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         });
 
-        // Initialize Theme
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
         }
 
         /* ==========================================================================
            INITIALIZATION ON LOAD
            ========================================================================== */
         window.onload = function() {
-            renderFeaturedDestinations();
-            renderAllDestinations();
-            updateSavedUI();
-            renderItineraryDays();
+            document.getElementById('language-select').value = currentLang;
+            changeLanguage(currentLang);
         };
     </script>
 </body>
