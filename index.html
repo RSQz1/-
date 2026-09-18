@@ -47,11 +47,29 @@
         body {
             font-family: 'Cairo', sans-serif;
             background-color: #f8fafc;
+            top: 0 !important; /* لمنع جوجل من تحريك الصفحة للأسفل */
         }
         
         .dark body {
             background-color: #0f172a;
             color: #f8fafc;
+        }
+
+        /* إخفاء شريط Google Translate العلوي المزعج */
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .goog-te-gadget-icon {
+            display: none !important;
+        }
+        .goog-te-gadget-simple {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            font-size: 14px !important;
         }
 
         /* Glassmorphism Styles */
@@ -117,6 +135,9 @@
 </head>
 <body class="text-slate-800 dark:text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white transition-colors duration-300">
 
+    <!-- عنصر غير مرئي لتشغيل ترجمة جوجل برمجياً -->
+    <div id="google_translate_element" class="hidden"></div>
+
     <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
@@ -151,6 +172,26 @@
 
                 <!-- Header Actions -->
                 <div class="flex items-center gap-3">
+                    
+                    <!-- Language Selector Dropdown -->
+                    <div class="relative inline-block text-right">
+                        <div class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold border border-slate-200 dark:border-slate-700">
+                            <i class="fa-solid fa-globe text-brand-600 text-sm"></i>
+                            <select id="language-select" onchange="changeLanguage(this.value)" class="bg-transparent outline-none cursor-pointer">
+                                <option value="ar" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">العربية 🇦🇪</option>
+                                <option value="en" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">English 🇬🇧</option>
+                                <option value="fr" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Français 🇫🇷</option>
+                                <option value="de" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Deutsch 🇩🇪</option>
+                                <option value="es" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Español 🇪🇸</option>
+                                <option value="it" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Italiano 🇮🇹</option>
+                                <option value="pt" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Português 🇵🇹</option>
+                                <option value="ru" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Русский 🇷🇺</option>
+                                <option value="nl" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Nederlands 🇳🇱</option>
+                                <option value="pl" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Polski 🇵🇱</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <!-- Dark Mode Toggle -->
                     <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="تبديل المظهر">
                         <i class="fa-solid fa-moon dark:hidden text-lg"></i>
@@ -628,6 +669,26 @@
             </div>
         </div>
     </footer>
+
+    <!-- Google Translate Script Setup -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'ar',
+                includedLanguages: 'ar,en,fr,de,es,it,pt,ru,nl,pl',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        function changeLanguage(langCode) {
+            var googleSelect = document.querySelector('.goog-te-combo');
+            if (googleSelect) {
+                googleSelect.value = langCode;
+                googleSelect.dispatchEvent(new Event('change'));
+            }
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
         /* ==========================================================================
@@ -1217,7 +1278,7 @@
         }
 
         function subscribeNewsletter() {
-            alert('شكراً لاشتراكك في النشرة السياحية الخاصة بنا!');
+            alert('شكراً لااشتراكك في النشرة السياحية الخاصة بنا!');
         }
 
         /* ==========================================================================
